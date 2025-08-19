@@ -41,7 +41,7 @@ public class TratadorDeErros {
 //    @ExceptionHandler(BadCredentialsException.class)
 //    public ResponseEntity tratarErroBadCredentials() {
 //        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
-//    }
+
 
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity tratarErroAuthentication() {
@@ -58,3 +58,4 @@ public class TratadorDeErros {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: " + ex.getLocalizedMessage());
     }
 }
+

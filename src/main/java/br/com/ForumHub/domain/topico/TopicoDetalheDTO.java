@@ -1,19 +1,16 @@
 package br.com.ForumHub.domain.topico;
 
-import br.com.ForumHub.domain.Usuario.Usuario;
-import br.com.ForumHub.domain.topico.Topico;
 import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
 public class TopicoDetalheDTO {
-
     private Long id;
     private String titulo;
     private String mensagem;
     private LocalDateTime dataCriacao;
     private String status;
-    private Usuario autor;
+    private String autor; // ← Mudar de Usuario para String (apenas login)
     private String curso;
 
     public TopicoDetalheDTO(Topico topico) {
@@ -22,7 +19,8 @@ public class TopicoDetalheDTO {
         this.mensagem = topico.getMensagem();
         this.dataCriacao = topico.getDataCriacao();
         this.status = topico.getStatus();
-        this.autor = topico.getAutor();
+        this.autor = topico.getAutor().getUsername(); // ← Pegar apenas o login
         this.curso = topico.getCurso();
     }
 }
+
