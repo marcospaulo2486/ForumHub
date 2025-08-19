@@ -37,18 +37,13 @@ public class TopicoController {
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid TopicoFormDTO dados, UriComponentsBuilder uriBuilder) {
 
-        // 1. Validar se não é tópico duplicado
         validacaoRegra.validarTopicoDuplicado(dados.getTitulo(), dados.getMensagem());
-
-        // 2. Pegar usuário autenticado do contexto de segurança
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         var usuarioLogado = (Usuario) authentication.getPrincipal();
 
-        // 3. Buscar usuário completo do banco
         Usuario autor = usuarioRepository.findById(usuarioLogado.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
-
-        // 4. Criar tópico com dados automáticos
+        
         var topico = new Topico(
                 null,                    // ID gerado automaticamente
                 dados.getTitulo(),          // Do DTO
@@ -58,8 +53,6 @@ public class TopicoController {
                 autor,                      // Usuário autenticado
                 dados.getCurso()           // Do DTO
         );
-
-        // 5. Salvar e retornar
         topicoRepository.save(topico);
 
         var uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
@@ -106,22 +99,7 @@ public class TopicoController {
             return ResponseEntity.notFound().build();
         }
     }
-//    @PutMapping("/{id}")
-//    @Transactional
-//    public ResponseEntity<TopicoDetalheDTO> atualizar(@PathVariable Long id, @RequestBody @Valid TopicoFormDTO dados) {
-//        Optional<Topico> optionalTopico = topicoRepository.findById(id);
-//
-//        if (optionalTopico.isPresent()) {
-//            validacaoRegra.validarTopicoDuplicadoUpdate(dados.getTitulo(), dados.getMensagem(), id);
-//
-//            var topico = optionalTopico.get();
-//            topico.atualizar(dados.getTitulo(), dados.getMensagem(), dados.getCurso());
-//
-//            return ResponseEntity.ok(new TopicoDetalheDTO(topico));
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         if (topicoRepository.existsById(id)) {
