@@ -34,7 +34,7 @@ public class Topico {
 
 
     public void atualizar(String titulo, String mensagem, String curso) {
-        // Remove a possibilidade de alterar o autor
+        
         if (titulo != null) {
             this.titulo = titulo;
         }
@@ -44,6 +44,6 @@ public class Topico {
         if (curso != null) {
             this.curso = curso;
         }
-        // Autor NÃO pode ser alterado - removido do método
+       
     }
 }
