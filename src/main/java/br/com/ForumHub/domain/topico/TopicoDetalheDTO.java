@@ -10,7 +10,7 @@ public class TopicoDetalheDTO {
     private String mensagem;
     private LocalDateTime dataCriacao;
     private String status;
-    private String autor; // ← Mudar de Usuario para String (apenas login)
+    private String autor; // 
     private String curso;
 
     public TopicoDetalheDTO(Topico topico) {
@@ -19,7 +19,7 @@ public class TopicoDetalheDTO {
         this.mensagem = topico.getMensagem();
         this.dataCriacao = topico.getDataCriacao();
         this.status = topico.getStatus();
-        this.autor = topico.getAutor().getUsername(); // ← Pegar apenas o login
+        this.autor = topico.getAutor().getUsername(); 
         this.curso = topico.getCurso();
     }
 }
