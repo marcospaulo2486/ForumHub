@@ -1,37 +1,32 @@
-#📝 ForumHub - API REST
+# 📝 ForumHub - API REST
 
-##🎯 Sobre o Projeto
-O ForumHub é uma API REST que faz uma abstração de fórum de discussão, permitindo operações CRUD completas para gerenciamento de tópicos com autenticação segura via JWT.
+## 🎯 Sobre o Projeto
+API REST para fórum de discussão com CRUD completo de tópicos e autenticação JWT.
 
-##🏗️ Arquitetura Utilizada
+## 🏗️ Arquitetura
 Arquitetura em Camadas (Layered Architecture)
+- Controller Layer
+- Service Layer  
+- Repository Layer
+- Domain Layer
+- Security Layer
 
-Controller Layer: TopicoController, AutenticacaoController
+## 🔒 Segurança Implementada
 
-Service Layer: ValidacaoRegra, AutenticacaoService, TokenService
-
-Repository Layer: TopicoRepository, UsuarioRepository
-
-Domain Layer: Topico, Usuario, DTOs
-
-Security Layer: SecurityConfigurations, SecurityFilter
-
-##🔒 Boas Práticas de Segurança Implementadas
-###🛡️ Medidas de Proteção:
-JWT (JSON Web Tokens) para autenticação stateless
-
-Spring Security com configuração personalizada
-
-BCrypt para hash de senhas
-
-CSRF Protection desabilitado (para APIs REST)
-
-CORS configurado adequadamente
-
-Validação de Dados com Bean Validation
-
-Filtro de Segurança (SecurityFilter) para validação de tokens
-
-Proteção contra tópicos duplicados
-
-Validação de ownership (usuário só mexe nos próprios tópicos)
+- Autenticação JWT
+- Spring Security Configurado
+- BCrypt para senhas
+- CSRF Protection (APIs REST)
+- Validação de Dados Bean Validation
+- Security Filter para tokens
+- Proteção contra duplicados
+- Validação de ownership
+## 📦 Dependências Principais
+- Spring Boot Starter Web
+Spring Boot Starter Data JPA
+Spring Boot Starter Validation
+Spring Boot Starter Security
+Java JWT (auth0)
+MySQL Connector
+Flyway Core
+Lombok
