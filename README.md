@@ -23,10 +23,20 @@ Arquitetura em Camadas (Layered Architecture)
 - Validação de ownership
 ## 📦 Dependências Principais
 - Spring Boot Starter Web
-Spring Boot Starter Data JPA
-Spring Boot Starter Validation
-Spring Boot Starter Security
-Java JWT (auth0)
-MySQL Connector
-Flyway Core
-Lombok
+- Spring Boot Starter Data JPA
+- Spring Boot Starter Validation
+- Spring Boot Starter Security
+- Java JWT (auth0)
+- MySQL Connector
+- Flyway Core
+- Lombok
+
+## ✅ Funcionalidades
+
+- CRUD completo de tópicos
+- Autenticação JWT automática
+- Validações de negócio
+- Associação automática de autor
+- Responses padronizadas em DTO
+- Migrations com Flyway
+- tratamento de erros
