@@ -31,3 +31,21 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Docker ###
+docker-compose.override.yml
+
+### Frontend ###
+frontend/node_modules/
+frontend/dist/
+
+### Secrets ###
+.env
+.env.*
+application-local.properties
+application-local.yml
+*.jks
+*.p12
+*.keystore
+*.pem
+*.key
