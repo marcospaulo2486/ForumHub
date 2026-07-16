@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,7 @@ public class TopicoController {
             @ApiResponse(responseCode = "400", description = "Tópico duplicado ou dados inválidos"),
             @ApiResponse(responseCode = "401", description = "Não autenticado")
     })
-    public ResponseEntity cadastrar(@RequestBody @Valid TopicoFormDTO dados, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<TopicoDetalheDTO> cadastrar(@RequestBody @Valid TopicoFormDTO dados, UriComponentsBuilder uriBuilder) {
 
         validacaoRegra.validarTopicoDuplicado(dados.getTitulo(), dados.getMensagem());
         var authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -80,6 +81,7 @@ public class TopicoController {
     }
 
     @GetMapping
+    @SecurityRequirements
     @Operation(summary = "Lista todos os tópicos", description = "Não requer autenticação")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Lista de tópicos retornada com sucesso")
@@ -94,6 +96,7 @@ public class TopicoController {
     }
 
     @GetMapping("/{id}")
+    @SecurityRequirements
     @Operation(summary = "Busca tópico por ID", description = "Não requer autenticação")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Tópico encontrado"),
@@ -143,19 +146,27 @@ public class TopicoController {
     @Operation(summary = "Deleta um tópico", description = "Requer autenticação")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Tópico deletado com sucesso"),
+            @ApiResponse(responseCode = "403", description = "Usuário não é o autor do tópico"),
             @ApiResponse(responseCode = "404", description = "Tópico não encontrado"),
             @ApiResponse(responseCode = "401", description = "Não autenticado")
     })
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        if (topicoRepository.existsById(id)) {
-            topicoRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
-        } else {
+        Optional<Topico> topico = topicoRepository.findById(id);
+        if (topico.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+
+        var usuarioLogado = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!topico.get().getAutor().getId().equals(usuarioLogado.getId())) {
+            return ResponseEntity.status(403).build();
+        }
+
+        topicoRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}/respostas")
+    @SecurityRequirements
     @Operation(summary = "Lista respostas de um tópico", description = "Não requer autenticação")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Lista de respostas retornada com sucesso"),

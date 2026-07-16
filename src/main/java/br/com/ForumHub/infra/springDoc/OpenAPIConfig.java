@@ -1,4 +1,4 @@
-package br.com.ForumHub.infra.security;
+package br.com.ForumHub.infra.springDoc;
 
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
