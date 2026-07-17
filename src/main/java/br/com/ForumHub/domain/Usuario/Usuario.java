@@ -42,7 +42,7 @@ public class Usuario implements UserDetails {
     }
 
     public String getNomeExibicao() {
-        return nomeExibicao != null && !nomeExibicao.isBlank() ? nomeExibicao : login;
+        return nomeExibicao != null && !nomeExibicao.isBlank() ? nomeExibicao : "Usuário";
     }
 
     @Override

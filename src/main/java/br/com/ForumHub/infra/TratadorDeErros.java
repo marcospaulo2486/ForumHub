@@ -1,6 +1,8 @@
 package br.com.ForumHub.infra;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class TratadorDeErros {
 
+    private final Logger log = LoggerFactory.getLogger(TratadorDeErros.class);
+
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<?> tratarErro404() {
         return ResponseEntity.notFound().build();
@@ -26,8 +30,8 @@ public class TratadorDeErros {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<?> tratarErro400(HttpMessageNotReadableException ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
+    public ResponseEntity<?> tratarErro400() {
+        return ResponseEntity.badRequest().body("Requisição inválida");
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -47,7 +51,8 @@ public class TratadorDeErros {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> tratarErro500(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: " + ex.getLocalizedMessage());
+        log.error("Erro interno não tratado", ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno no servidor");
     }
 
     private record DadosErroValidacao(String campo, String mensagem) {
