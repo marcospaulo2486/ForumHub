@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 export default function Register() {
   const [login, setLogin] = useState('');
   const [senha, setSenha] = useState('');
+  const [nomeExibicao, setNomeExibicao] = useState('');
   const [error, setError] = useState('');
   const { register: authRegister, loading } = useAuth();
   const navigate = useNavigate();
@@ -13,12 +14,12 @@ export default function Register() {
     e.preventDefault();
     setError('');
 
-    if (!login.trim() || !senha.trim()) {
+    if (!login.trim() || !senha.trim() || !nomeExibicao.trim()) {
       setError('Preencha todos os campos.');
       return;
     }
 
-    const ok = await authRegister(login, senha);
+    const ok = await authRegister(login, senha, nomeExibicao);
     if (ok) {
       navigate('/login');
     } else {
@@ -35,6 +36,16 @@ export default function Register() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-xs text-text-muted mb-1 font-mono">nomeExibicao</label>
+            <input
+              type="text"
+              value={nomeExibicao}
+              onChange={(e) => setNomeExibicao(e.target.value)}
+              className="w-full bg-bg-input border border-border rounded px-3 py-2 text-text-bright text-sm font-mono focus:outline-none focus:border-green transition-colors"
+              placeholder="João Dev"
+            />
+          </div>
           <div>
             <label className="block text-xs text-text-muted mb-1 font-mono">login</label>
             <input

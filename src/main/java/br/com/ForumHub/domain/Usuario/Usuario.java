@@ -24,6 +24,7 @@ public class Usuario implements UserDetails {
     private Long id;
     private String login;
     private String senha;
+    private String nomeExibicao;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -38,6 +39,10 @@ public class Usuario implements UserDetails {
     @Override
     public String getUsername() {
         return login;
+    }
+
+    public String getNomeExibicao() {
+        return nomeExibicao != null && !nomeExibicao.isBlank() ? nomeExibicao : login;
     }
 
     @Override

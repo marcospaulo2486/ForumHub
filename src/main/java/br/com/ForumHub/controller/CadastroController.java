@@ -43,7 +43,7 @@ public class CadastroController {
         }
 
         String senhaCriptografada = passwordEncoder.encode(dados.getSenha());
-        var usuario = new Usuario(null, dados.getLogin(), senhaCriptografada);
+        var usuario = new Usuario(null, dados.getLogin(), senhaCriptografada, dados.getNomeExibicao());
         usuarioRepository.save(usuario);
 
         var uri = uriBuilder.path("/register").buildAndExpand(usuario.getId()).toUri();

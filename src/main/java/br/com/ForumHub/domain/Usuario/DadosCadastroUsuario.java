@@ -21,4 +21,8 @@ public class DadosCadastroUsuario {
     @NotBlank(message = "A senha não pode estar em branco")
     @Schema(description = "Senha do usuário", example = "123456")
     private String senha;
+
+    @NotBlank(message = "O nome de exibição não pode estar em branco")
+    @Schema(description = "Nome de exibição público (não é o e-mail)", example = "João Dev")
+    private String nomeExibicao;
 }

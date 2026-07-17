@@ -28,6 +28,9 @@ public class SecurityConfigurations {
     @Autowired
     private SecurityFilter securityFilter;
 
+    @Autowired
+    private RateLimitFilter rateLimitFilter;
+
     @Value("${app.cors.allowed-origins:http://localhost:3000,http://localhost:5173}")
     private String allowedOrigins;
 
@@ -42,9 +45,10 @@ public class SecurityConfigurations {
                     req.requestMatchers(HttpMethod.GET, "/topicos").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/topicos/{id}").permitAll();
                     req.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll();
-                    req.requestMatchers("/actuator/**").permitAll();
+                    req.requestMatchers("/actuator/health").permitAll();
                     req.anyRequest().authenticated();
                 })
+                .addFilterBefore(rateLimitFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

@@ -24,7 +24,7 @@ public class TopicoDetalheDTO {
     @Schema(description = "Status do tópico", example = "ATIVO")
     private String status;
 
-    @Schema(description = "E-mail do autor do tópico", example = "usuario@email.com")
+    @Schema(description = "Nome de exibição do autor do tópico", example = "João Dev")
     private String autor;
 
     @Schema(description = "Categoria/curso do tópico", example = "Java")
@@ -36,7 +36,7 @@ public class TopicoDetalheDTO {
         this.mensagem = topico.getMensagem();
         this.dataCriacao = topico.getDataCriacao();
         this.status = topico.getStatus();
-        this.autor = topico.getAutor().getUsername();
+        this.autor = topico.getAutor().getNomeExibicao();
         this.curso = topico.getCurso();
     }
 }

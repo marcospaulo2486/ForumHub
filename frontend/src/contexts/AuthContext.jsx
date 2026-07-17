@@ -31,10 +31,10 @@ export function AuthProvider({ children }) {
     }
   }
 
-  async function register(login, senha) {
+  async function register(login, senha, nomeExibicao) {
     setLoading(true);
     try {
-      await apiRegister(login, senha);
+      await apiRegister(login, senha, nomeExibicao);
       return true;
     } catch {
       return false;

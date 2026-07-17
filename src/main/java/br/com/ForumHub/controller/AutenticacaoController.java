@@ -34,7 +34,8 @@ public class AutenticacaoController {
     @Operation(summary = "Efetua login", description = "Retorna um token JWT para autenticação nas demais requisições")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Login realizado com sucesso, retorna token JWT"),
-            @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas"),
+            @ApiResponse(responseCode = "429", description = "Muitas tentativas. Tente novamente em 1 minuto")
     })
     public ResponseEntity<DadosTokenJWT> efetuarLogin(@RequestBody @Valid DadosAutenticacao dados) {
         var authenticationToken = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());

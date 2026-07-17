@@ -18,7 +18,7 @@ public class RespostaDetalheDTO {
     @Schema(description = "Data de criação da resposta", example = "2025-07-15T10:30:00")
     private LocalDateTime dataCriacao;
 
-    @Schema(description = "E-mail do autor da resposta", example = "usuario@email.com")
+    @Schema(description = "Nome de exibição do autor da resposta", example = "João Dev")
     private String autor;
 
     @Schema(description = "Se a resposta é a solução aceita", example = "false")
@@ -28,7 +28,7 @@ public class RespostaDetalheDTO {
         this.id = resposta.getId();
         this.mensagem = resposta.getMensagem();
         this.dataCriacao = resposta.getDataCriacao();
-        this.autor = resposta.getAutor().getUsername();
+        this.autor = resposta.getAutor().getNomeExibicao();
         this.solucao = resposta.isSolucao();
     }
 }
